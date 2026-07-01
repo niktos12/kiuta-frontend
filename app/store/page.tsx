@@ -79,7 +79,7 @@ export default function StorePage() {
     <>
       <Breadcrumbs items={[{ label: t("store.title") }]} />
       {/* Hero */}
-      <section className="pt-8 pb-20 relative overflow-hidden">
+      <section className="pt-8 pb-20 relative overflow-hidden max-lg:pt-16">
         <div className="absolute inset-0 dot-pattern opacity-20" />
         <div className="container relative z-10 flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
           <div className="flex-1 text-center lg:text-left">
@@ -102,9 +102,9 @@ export default function StorePage() {
             <div className="hidden sm:block">
               <Crystal3D size={280} interactive={true} speed={18} />
             </div>
-            <div className="sm:hidden">
+            {/* <div className="sm:hidden">
               <Crystal3D size={200} interactive={true} speed={18} />
-            </div>
+            </div> */}
           </div>
         </div>
       </section>
