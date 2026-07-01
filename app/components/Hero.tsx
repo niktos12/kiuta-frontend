@@ -136,7 +136,7 @@ export function Hero() {
             transition={{ duration: 1.2, ease, delay: 0.4 }}
           >
             <div className="absolute w-[300px] h-[500px] lg:w-[450px] lg:h-[600px] rounded-full bg-white/[0.02] blur-[80px]" />
-            <Crystal3D size={280} className="relative z-10 lg:hidden" />
+            {/* <Crystal3D size={280} className="relative z-10 lg:hidden" /> */}
             <Crystal3D size={400} className="relative z-10 hidden lg:block" />
           </motion.div>
         </div>
