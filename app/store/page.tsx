@@ -1,9 +1,6 @@
 "use client";
 
-import {
-  Crystal3D,
-  CrystalIcon,
-} from "../components/Crystal3D";
+import { Crystal3D, CrystalIcon } from "../components/Crystal3D";
 import { useLanguage } from "../store/languageStore";
 import { Breadcrumbs } from "../components/Breadcrumbs";
 
@@ -79,7 +76,7 @@ export default function StorePage() {
     <>
       <Breadcrumbs items={[{ label: t("store.title") }]} />
       {/* Hero */}
-      <section className="pt-8 pb-20 relative overflow-hidden max-lg:pt-16">
+      <section className="pt-8 pb-20 relative overflow-hidden">
         <div className="absolute inset-0 dot-pattern opacity-20" />
         <div className="container relative z-10 flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
           <div className="flex-1 text-center lg:text-left">
@@ -99,12 +96,7 @@ export default function StorePage() {
           {/* Crystal */}
           <div className="flex-shrink-0 relative">
             <div className="absolute w-[250px] h-[250px] rounded-full bg-white/[0.02] blur-[80px] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" />
-            <div className="hidden sm:block">
-              <Crystal3D size={280} interactive={true} speed={18} />
-            </div>
-            {/* <div className="sm:hidden">
-              <Crystal3D size={200} interactive={true} speed={18} />
-            </div> */}
+            <Crystal3D size={280} interactive={true} speed={18} />
           </div>
         </div>
       </section>
