@@ -100,14 +100,14 @@ export default function ProductsPage() {
     (inStockOnly ? 1 : 0) +
     (sort !== "featured" ? 1 : 0);
 
-  // Ключ для перемонтирования сетки при смене фильтров —
-  // решает баг с invisible карточками из-за whileInView + once:true
+  // Ключ для перемонтирования сетки при смене фильтров
   const gridKey = `${activeCategoryId}-${inStockOnly}-${sort}-${search}`;
 
   return (
     <div className="pb-20">
       <Breadcrumbs items={[{ label: t("nav.products") }]} />
       <div className="container">
+        {/* Заголовок — анимация только здесь */}
         <AnimatedSection className="mb-8" direction="up">
           <div className="flex items-end justify-between flex-wrap gap-4">
             <div>
@@ -127,173 +127,169 @@ export default function ProductsPage() {
           </div>
         </AnimatedSection>
 
-        {/* Search bar */}
-        <AnimatedSection className="mb-4" direction="up" delay={0.05}>
-          <div className="relative">
-            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none">
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-              >
-                <circle cx="11" cy="11" r="8" />
-                <line x1="21" y1="21" x2="16.65" y2="16.65" />
-              </svg>
-            </div>
-            <input
-              type="text"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder={t("filters.searchPlaceholder")}
-              className="input !pl-12 pr-4"
-              aria-label={t("filters.search")}
-            />
-            {search && (
-              <button
-                onClick={() => setSearch("")}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-white/30 hover:text-white transition-colors"
-                aria-label="Clear search"
-              >
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  aria-hidden="true"
-                >
-                  <path d="M18 6L6 18M6 6l12 12" />
-                </svg>
-              </button>
-            )}
+        {/* Search bar — БЕЗ AnimatedSection, чтобы избежать багов на мобильных */}
+        <div className="relative mb-4">
+          <div className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none">
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
           </div>
-        </AnimatedSection>
-
-        {/* Filter toolbar */}
-        <AnimatedSection className="mb-6" direction="up" delay={0.1}>
-          <div className="glass-card p-4 flex items-center gap-2 flex-wrap">
-            {/* Category chips */}
-            <div className="flex items-center gap-1.5 flex-wrap">
-              <button
-                onClick={() => setActiveCategoryId("all")}
-                className={`px-3 py-1.5 rounded-lg text-[0.75rem] font-medium border transition-all ${
-                  activeCategoryId === "all"
-                    ? "bg-white text-black border-transparent"
-                    : "border-white/[0.08] text-white/50 hover:text-white hover:border-white/20"
-                }`}
-              >
-                {t("filters.allCategories")}
-              </button>
-              {categories.map((cat) => (
-                <button
-                  key={cat.id}
-                  onClick={() => setActiveCategoryId(cat.id)}
-                  className={`px-3 py-1.5 rounded-lg text-[0.75rem] font-medium border transition-all ${
-                    activeCategoryId === cat.id
-                      ? "bg-white text-black border-transparent"
-                      : "border-white/[0.08] text-white/50 hover:text-white hover:border-white/20"
-                  }`}
-                >
-                  {getCategoryLabel(cat)}
-                </button>
-              ))}
-            </div>
-
-            {/* Divider */}
-            <div className="w-px h-6 bg-white/[0.08] mx-1 hidden sm:block" />
-
-            {/* Sort dropdown */}
-            <div className="relative ml-auto">
-              <select
-                value={sort}
-                onChange={(e) => setSort(e.target.value as SortKey)}
-                className="appearance-none bg-white/[0.03] border border-white/[0.08] text-white/70 text-[0.78rem] rounded-lg pl-4 pr-9 py-2.5 cursor-pointer hover:border-white/20 transition-colors focus:border-white/30 focus:outline-none"
-                aria-label={t("filters.sortBy")}
-              >
-                <option value="featured" className="bg-black">
-                  {t("filters.sort.featured")}
-                </option>
-                <option value="priceAsc" className="bg-black">
-                  {t("filters.sort.priceAsc")}
-                </option>
-                <option value="priceDesc" className="bg-black">
-                  {t("filters.sort.priceDesc")}
-                </option>
-                <option value="nameAsc" className="bg-black">
-                  {t("filters.sort.nameAsc")}
-                </option>
-                <option value="nameDesc" className="bg-black">
-                  {t("filters.sort.nameDesc")}
-                </option>
-              </select>
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder={t("filters.searchPlaceholder")}
+            className="input !pl-12 pr-4"
+            aria-label={t("filters.search")}
+          />
+          {search && (
+            <button
+              onClick={() => setSearch("")}
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-white/30 hover:text-white transition-colors"
+              aria-label="Clear search"
+            >
               <svg
-                className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-white/40"
-                width="14"
-                height="14"
+                width="16"
+                height="16"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
                 aria-hidden="true"
               >
-                <path d="M6 9l6 6 6-6" />
+                <path d="M18 6L6 18M6 6l12 12" />
               </svg>
-            </div>
+            </button>
+          )}
+        </div>
 
-            {/* In-stock toggle */}
+        {/* Filter toolbar — БЕЗ AnimatedSection, обычный div */}
+        <div className="glass-card p-4 flex items-center gap-2 flex-wrap mb-6">
+          {/* Category chips */}
+          <div className="flex items-center gap-1.5 flex-wrap">
             <button
-              onClick={() => setInStockOnly(!inStockOnly)}
-              className={`px-4 py-2.5 rounded-lg text-[0.78rem] font-medium border transition-all flex items-center gap-1.5 ${
-                inStockOnly
+              onClick={() => setActiveCategoryId("all")}
+              className={`px-3 py-1.5 rounded-lg text-[0.75rem] font-medium border transition-all ${
+                activeCategoryId === "all"
                   ? "bg-white text-black border-transparent"
                   : "border-white/[0.08] text-white/50 hover:text-white hover:border-white/20"
               }`}
             >
+              {t("filters.allCategories")}
+            </button>
+            {categories.map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => setActiveCategoryId(cat.id)}
+                className={`px-3 py-1.5 rounded-lg text-[0.75rem] font-medium border transition-all ${
+                  activeCategoryId === cat.id
+                    ? "bg-white text-black border-transparent"
+                    : "border-white/[0.08] text-white/50 hover:text-white hover:border-white/20"
+                }`}
+              >
+                {getCategoryLabel(cat)}
+              </button>
+            ))}
+          </div>
+
+          {/* Divider */}
+          <div className="w-px h-6 bg-white/[0.08] mx-1 hidden sm:block" />
+
+          {/* Sort dropdown */}
+          <div className="relative ml-auto">
+            <select
+              value={sort}
+              onChange={(e) => setSort(e.target.value as SortKey)}
+              className="appearance-none bg-white/[0.03] border border-white/[0.08] text-white/70 text-[0.78rem] rounded-lg pl-4 pr-9 py-2.5 cursor-pointer hover:border-white/20 transition-colors focus:border-white/30 focus:outline-none"
+              aria-label={t("filters.sortBy")}
+            >
+              <option value="featured" className="bg-black">
+                {t("filters.sort.featured")}
+              </option>
+              <option value="priceAsc" className="bg-black">
+                {t("filters.sort.priceAsc")}
+              </option>
+              <option value="priceDesc" className="bg-black">
+                {t("filters.sort.priceDesc")}
+              </option>
+              <option value="nameAsc" className="bg-black">
+                {t("filters.sort.nameAsc")}
+              </option>
+              <option value="nameDesc" className="bg-black">
+                {t("filters.sort.nameDesc")}
+              </option>
+            </select>
+            <svg
+              className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-white/40"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              aria-hidden="true"
+            >
+              <path d="M6 9l6 6 6-6" />
+            </svg>
+          </div>
+
+          {/* In-stock toggle */}
+          <button
+            onClick={() => setInStockOnly(!inStockOnly)}
+            className={`px-4 py-2.5 rounded-lg text-[0.78rem] font-medium border transition-all flex items-center gap-1.5 ${
+              inStockOnly
+                ? "bg-white text-black border-transparent"
+                : "border-white/[0.08] text-white/50 hover:text-white hover:border-white/20"
+            }`}
+          >
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              aria-hidden="true"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            {t("filters.inStockOnly")}
+          </button>
+
+          {/* Clear all */}
+          {activeFiltersCount > 0 && (
+            <button
+              onClick={clearAll}
+              className="px-3 py-2.5 rounded-lg text-[0.78rem] text-white/40 hover:text-white transition-colors flex items-center gap-1"
+            >
               <svg
-                width="14"
-                height="14"
+                width="13"
+                height="13"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
                 aria-hidden="true"
               >
-                <polyline points="20 6 9 17 4 12" />
+                <path d="M18 6L6 18M6 6l12 12" />
               </svg>
-              {t("filters.inStockOnly")}
+              {t("filters.clear")}
             </button>
+          )}
+        </div>
 
-            {/* Clear all */}
-            {activeFiltersCount > 0 && (
-              <button
-                onClick={clearAll}
-                className="px-3 py-2.5 rounded-lg text-[0.78rem] text-white/40 hover:text-white transition-colors flex items-center gap-1"
-              >
-                <svg
-                  width="13"
-                  height="13"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  aria-hidden="true"
-                >
-                  <path d="M18 6L6 18M6 6l12 12" />
-                </svg>
-                {t("filters.clear")}
-              </button>
-            )}
-          </div>
-        </AnimatedSection>
-
-        {/* Results grid — key={gridKey} перемонтирует сетку при смене фильтров */}
+        {/* Results grid */}
         {loading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {Array.from({ length: 8 }).map((_, i) => (

@@ -69,6 +69,8 @@ const translations: Record<Language, Record<string, string>> = {
     "catalog.cat.wearables": "Wearables",
     "catalog.cat.accessories": "Accessories",
     "catalog.cat.cameras": "Cameras",
+    "catalog.cat.gaming": "Gaming",
+    "catalog.cat.electronics": "Electronics",
 
     // Product Card
     "product.add": "Add",
@@ -475,6 +477,8 @@ const translations: Record<Language, Record<string, string>> = {
     "catalog.cat.wearables": "Носимые устройства",
     "catalog.cat.accessories": "Аксессуары",
     "catalog.cat.cameras": "Камеры",
+    "catalog.cat.gaming": "Гейминг",
+    "catalog.cat.electronics": "Электроника",
 
     // Product Card
     "product.add": "Добавить",

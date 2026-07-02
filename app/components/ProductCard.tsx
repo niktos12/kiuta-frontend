@@ -86,7 +86,7 @@ export function ProductCard({ product }: { product: Product }) {
         </Link>
         <div className="mt-auto flex items-center justify-between">
           <span className="text-[0.95rem] font-semibold">
-            ${product.price.toLocaleString()}
+            ${Number(product.price).toLocaleString()}
           </span>
           <button
             onClick={() =>
